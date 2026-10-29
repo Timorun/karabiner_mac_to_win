@@ -1,0 +1,501 @@
+{
+  "global": { "check_for_updates": false },
+  "profiles": [
+    {
+      "complex_modifications": {
+        "rules": [
+          {
+            "description": "Swap Ctrl and Command, except Windows-RDP (on all keyboards)",
+            "manipulators": [
+              {
+                "conditions": [
+                  //   {
+                  //     "identifiers": [
+                  //       {
+                  //         "is_keyboard": true,
+                  //         "product_id": 22,
+                  //         "vendor_id": 9610
+                  //       }
+                  //     ],
+                  //     "type": "device_if"
+                  //   },
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "left_control",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_command" }],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  //   {
+                  //     "identifiers": [
+                  //       {
+                  //         "is_keyboard": true,
+                  //         "product_id": 22,
+                  //         "vendor_id": 9610
+                  //       }
+                  //     ],
+                  //     "type": "device_if"
+                  //   },
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "left_command",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "left_control" }],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  //   {
+                  //     "identifiers": [
+                  //       {
+                  //         "is_keyboard": true,
+                  //         "product_id": 22,
+                  //         "vendor_id": 9610
+                  //       }
+                  //     ],
+                  //     "type": "device_if"
+                  //   },
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "right_control",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "right_command" }],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Fix grave accent and tilde in RDP",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "non_us_backslash",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [{ "key_code": "grave_accent_and_tilde" }],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "PrintScreen => ScreenCapture Toolbar (Cmd+Shift+5)",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "print_screen"
+                },
+                "to": [
+                  {
+                    "key_code": "5",
+                    "modifiers": ["left_command", "left_shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Shift+PrintScreen => Screenshot to Clipboard (Cmd+Ctrl+Shift+4)",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "print_screen",
+                  "modifiers": { "mandatory": ["shift"] }
+                },
+                "to": [
+                  {
+                    "key_code": "4",
+                    "modifiers": ["left_command", "left_control", "left_shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Cmd+(Shift)+Right/left arrow => Alt/Option+(Shift)+Right/left arrow (Move cursor one word with selection and without selection)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "left_arrow",
+                  "modifiers": {
+                    "mandatory": ["command"],
+                    "optional": ["shift"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_arrow",
+                    "modifiers": ["left_option"]
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "right_arrow",
+                  "modifiers": {
+                    "mandatory": ["command"],
+                    "optional": ["shift"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": ["left_option"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Cmd+Y => Cmd+Shift+Y (Redo)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "y",
+                  "modifiers": {
+                    "mandatory": ["command"],
+                    "optional": ["any"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "z",
+                    "modifiers": ["left_command", "left_shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "F2 => Return (Rename) (Only in Finder)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": ["^com.apple.finder"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": { "key_code": "f2" },
+                "to": [{ "key_code": "return_or_enter" }],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Spotlight search",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": ["^com\\.apple\\.Terminal$"],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": { "key_code": "application" },
+                "to": [{ "apple_vendor_keyboard_key_code": "spotlight" }],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Delete => Cmd+backspace (Delete) (Only in Finder)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": ["^com.apple.finder"],
+                    "type": "frontmost_application_if"
+                  }
+                ],
+                "from": {
+                  "key_code": "delete_forward",
+                  "modifiers": { "optional": ["any"] }
+                },
+                "to": [
+                  {
+                    "key_code": "delete_or_backspace",
+                    "modifiers": ["left_command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Cmd+Backspace => Alt/Option+Backspace (Delete previous word)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$",
+                      "^com.apple.finder"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "type": "basic",
+                "from": {
+                  "key_code": "delete_or_backspace",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "delete_or_backspace",
+                    "modifiers": ["option"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Home => Cmd+Left arrow (Move cursor to beginning of line)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": { "key_code": "home" },
+                "to": [
+                  {
+                    "key_code": "left_arrow",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Ctrl+Home, Ctrl+Shift+Home => Cmd+Up arrow, Cmd+Shift+Up arrow (Move cursor to beginning of file with and without selection)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "home",
+                  "modifiers": {
+                    "mandatory": ["control"],
+                    "optional": ["shift"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "up_arrow",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "End => Cmd+Right arrow (Move cursor to end of line)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": { "key_code": "end" },
+                "to": [
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Shift+End => Cmd+Shift+Right arrow (Move cursor to end of line with selection)",
+            "manipulators": [
+              {
+                "conditions": [
+                  {
+                    "bundle_identifiers": [
+                      "^com\\.apple\\.Terminal$",
+                      "^com\\.microsoft\\.rdc\\.macos$"
+                    ],
+                    "type": "frontmost_application_unless"
+                  }
+                ],
+                "from": {
+                  "key_code": "end",
+                  "modifiers": { "mandatory": ["shift"] }
+                },
+                "to": [
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command", "shift"]
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          }
+        ]
+      },
+      "devices": [
+        {
+          "fn_function_keys": [
+            {
+              "from": { "key_code": "f1" },
+              "to": [{ "key_code": "f1" }]
+            },
+            {
+              "from": { "key_code": "f2" },
+              "to": [{ "key_code": "f2" }]
+            },
+            {
+              "from": { "key_code": "f3" },
+              "to": [{ "key_code": "f3" }]
+            },
+            {
+              "from": { "key_code": "f4" },
+              "to": [{ "key_code": "f4" }]
+            },
+            {
+              "from": { "key_code": "f5" },
+              "to": [{ "key_code": "f5" }]
+            },
+            {
+              "from": { "key_code": "f6" },
+              "to": [{ "key_code": "f6" }]
+            },
+            {
+              "from": { "key_code": "f7" },
+              "to": [{ "key_code": "f7" }]
+            },
+            {
+              "from": { "key_code": "f8" },
+              "to": [{ "key_code": "f8" }]
+            },
+            {
+              "from": { "key_code": "f9" },
+              "to": [{ "key_code": "f9" }]
+            },
+            {
+              "from": { "key_code": "f10" },
+              "to": [{ "key_code": "f10" }]
+            },
+            {
+              "from": { "key_code": "f11" },
+              "to": [{ "key_code": "f11" }]
+            },
+            {
+              "from": { "key_code": "f12" },
+              "to": [{ "key_code": "f12" }]
+            }
+          ],
+          "identifiers": {
+            "is_keyboard": true,
+            "product_id": 22,
+            "vendor_id": 9610
+          },
+          "swap_grave_accent_and_non_us_backslash": true
+        },
+        {
+          "identifiers": {
+            "is_keyboard": true,
+            "product_id": 641,
+            "vendor_id": 1452
+          },
+          "swap_grave_accent_and_non_us_backslash": true
+        }
+      ],
+      "name": "My custom mappings",
+      "selected": true,
+      "virtual_hid_keyboard": { "keyboard_type_v2": "iso" }
+    }
+  ]
+}
